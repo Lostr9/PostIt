@@ -8,7 +8,11 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 var app = express();
+<<<<<<< HEAD
 ///как это работает? bynthtcyj dctv
+=======
+
+>>>>>>> 71b14f18cf6d285a1b4b87b145fa03581134c132
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
