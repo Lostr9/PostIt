@@ -3,11 +3,9 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var LocalStrategy = require('passport-local').Strategy;
-var passport = require('passport');
 var mongoose = require('mongoose');
 var conf = require('./config'); // config
-
+var passport = require('./auth');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -27,6 +25,7 @@ app.use(require('express-session')({
   resave: false,
   saveUninitialized: false
 }));
+
 // mongoose
 mongoose.connect('mongodb://localhost/PostItNew');
 

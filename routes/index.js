@@ -1,5 +1,8 @@
 var express = require('express');
 var router = express.Router();
+var passport = require('passport');
+var mongoose = require('mongoose');
+var User = require('../models/user');
 
 /* GET home page. */
 router.get('/trash', function(req, res, next) {
@@ -12,6 +15,8 @@ router.get('/trash', function(req, res, next) {
   res.render('index', { title: 'Express ', title1: 'Express ', title2: 'Express' });
 });
 
-
+router.get('/login', function(req, res) {
+  res.render('test');
+});
 
 module.exports = router;
