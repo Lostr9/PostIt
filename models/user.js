@@ -25,6 +25,29 @@ var SocialNetworks = new Schema({
   }
 });
 
+var SocialNetworks = new Schema({
+  name: {
+    type: String,
+    require: true
+  },
+  surname: {
+    type: String,
+    default: null
+  },
+  title: {
+    type: String,
+    require: true
+  },
+  access_token: {
+    type: String
+  },
+  id: {
+    type: Number,
+    unique: true,
+    require: true
+  }
+});
+
 var User = new Schema({
   username: {
     type: String,
@@ -48,6 +71,10 @@ var User = new Schema({
   Networks: [SocialNetworks]
 });
 
+<<<<<<< HEAD
 User.plugin(passportLocalMongoose);
+=======
+//User.plugin(passportLocalMongoose);
+>>>>>>> 427c2e19fb45c846e01bb63b2b26ae55dded8b91
 
 module.exports = mongoose.model('users', User);
