@@ -1,12 +1,9 @@
 var LocalStrategy = require('passport-local').Strategy;
 var passport = require('passport');
-
-app.use(passport.initialize());
-app.use(passport.session());
+var User = require('./models/user');
 
 // passport config
-var User = require('./models/user');
-passport.use(new LocalStrategy(
+/*assport.use(new LocalStrategy(
   function(username, password, done){
     User.findOne({username: username}, function(err, user){
       if (err) return done(err);
@@ -15,7 +12,8 @@ passport.use(new LocalStrategy(
       }
     });
   }
-));
+));*/
+passport.use(new LocalStrategy(User.authenticate()));
 
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
