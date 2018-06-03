@@ -24,9 +24,14 @@ router.get('/', function(req,res){
 });
 
 router.post('/login', function(req, res) {
-  passport.authenticate('local')(req, res, function () {
-    res.redirect('/');
-  });
+  passport.authenticate('local', function(err, user, info) {
+    if (err) { return next(err); }
+    if (!user) { return res.render('/', {loginError: 'Ошибка', regError: ''}); }
+    req.logIn(user, function(err) {
+      if (err) { return next(err); }
+      return res.redirect('/');
+    });
+  })(req, res);
 });
 
 router.get('/register', function(req, res) {
@@ -35,11 +40,11 @@ router.get('/register', function(req, res) {
 
 router.post('/register', function(req, res) {
   console.log(req.body);
-  User.register(new User({ username : req.body.username, email: req.body.email }), req.body.password, function(err, user) {
+  User.register(new User({ username : req.body.username, email: req.body.email }), req.body.password1, function(err, user) {
     if (err) {
       return res.render('authPage', {loginError: '', regError: err});
     }
-
+    console.log('Зареган');
     passport.authenticate('local')(req, res, function () {
       res.redirect('/');
     });
