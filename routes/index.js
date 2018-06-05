@@ -17,6 +17,7 @@ var User = require('../models/user');
 
 router.get('/', function(req,res){
   if (req.user){
+    res.redirect('/profile');
     res.render('index', {info: req.user});
   }else{
     res.render('authPage', {loginError: '', regError: ''});
@@ -24,9 +25,10 @@ router.get('/', function(req,res){
 });
 
 router.post('/login', function(req, res) {
+  console.log(req.body);
   passport.authenticate('local', function(err, user, info) {
     if (err) { return next(err); }
-    if (!user) { return res.render('/', {loginError: 'Ошибка', regError: ''}); }
+    if (!user) { return res.render('authPage', {loginError: 'Неверное имя пользователя или пароль', regError: ''}); }
     req.logIn(user, function(err) {
       if (err) { return next(err); }
       return res.redirect('/');
@@ -53,7 +55,7 @@ router.post('/register', function(req, res) {
 
 router.get('/logout', function(req, res) {
   req.logout();
-  res.render('index', { info: 'logout'});
+  res.render('index', { info: 'Вы вышли из своей учётной записи'});
 });
 
 
