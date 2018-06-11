@@ -5,26 +5,21 @@ var passportLocalMongoose = require('passport-local-mongoose');
 var SocialNetworks = new Schema({
   name: {
     type: String,
-    require: true,
-    default: 'name'
+    require: true
   },
   surname: {
-    type: String,
-    default: 'null'
+    type: String
   },
   title: {
     type: String,
-    require: true,
-    default: 'title'
+    require: true
   },
   access_token: {
-    type: String,
-    default: 'token'
+    type: String
   },
   id: {
     type: Number,
     //unique: true,
-    default: '1111',
     require: true
   }
 });
