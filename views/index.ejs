@@ -1,11 +1,122 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
   <head>
-    <title>Welcome</title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="./img/favicon.ico">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&amp;subset=cyrillic" rel="stylesheet">
+
+    <!-- Custom styles -->
+    <link rel="stylesheet" href="css/main.css">
+
+
+    <title>Main page</title>
   </head>
   <body>
-    <h1><%= info %></h1>
-    <p>Welcome</p>
+    <div class="container">
+      <div class="top-nav">
+        <div class="row justify-content-between align-items-center">
+          <div class="col-md">
+            <a href="/">Post It</a>
+          </div>
+          <!-- /.col-md -->
+          <div class="col-md">
+            <form method="post" class="top-nav_login" action="/login">
+              <div class="top-nav_login_group">
+                <label for="InputUsername">Имя</label>
+                <input type="text" class="form-control" name="username">
+              </div>
+              <!-- /.form-group -->
+              <div class="top-nav_login_group">
+                <label for="exampleInputPassword1">Пароль</label>
+                <input type="password" class="form-control" name="password">
+              </div>
+              <!-- /.form-group -->
+              <div class="top-nav_login_btn">
+                <button type="submit" class="btn">Войти</button>
+              </div>
+              <!-- /.top-nav_login_group -->
+            </form>
+            <!-- /.top-nav_login -->
+            <div class="top-error">
+              <p><%= LoginError %></p>
+            </div>
+          </div>
+          <!-- /.col-md -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.top-nav -->
+      <div class="content">
+        <div class="row">
+          <div class="col-md">
+            <div class="content_hello">
+              <h1>Добро пожаловать!</h1>
+              <p>Наш проект поможет Вам разослать Ваши посты в социальные сети в один клик.</p>
+              <p>Для того, чтобы начать, Вам нужно:</p>
+              <ul class="list-unstyled">
+                <ul>
+                  <li>зарегистрироваться</li>
+                  <li>подключить свои социальные сети</li>
+                  <li>начать постить</li>
+                </ul>
+              </ul>
+            </div>
+            <!-- /.content_hello -->
+          </div>
+          <!-- /.col-md -->
+          <div class="col-md">
+            <form method="post" class="content_registration" action="/registration">
+              <div class="content_registration_group col">
+                <label for="InputUsername">Email</label>
+                <input type="text" class="form-control" name="email">
+              </div>
+              <!-- /.form-group -->
+              <div class="content_registration_group col">
+                <label for="InputUsername">Имя</label>
+                <input type="text" class="form-control" name="username">
+              </div>
+              <!-- /.form-group -->
+              <div class="content_registration_group col">
+                <label for="exampleInputPassword1">Пароль</label>
+                <input type="password" class="form-control" name="password">
+              </div>
+              <!-- /.form-group -->
+              <div class="content_registration_group col">
+                <label for="exampleInputPassword1">Повторите пароль</label>
+                <input type="password" class="form-control" name="password1">
+              </div>
+              <!-- /.form-group -->
+              <div class="content_registration_error col">
+                <p><%= RegisterError %></p>
+              </div>
+              <div class="content_registration_btn col">
+                <button type="submit" class="btn">Зарегистрироваться</button>
+              </div>
+              <!-- /.top-nav_login_group -->
+            </form>
+
+          </div>
+          <!-- /.col-md -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.content -->
+
+    </div>
+    <!-- /.container -->
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
   </body>
 </html>

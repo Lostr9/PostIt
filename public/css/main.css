@@ -1,0 +1,91 @@
+html {
+  font-size: 15px;
+}
+
+body {
+  background-image: url(../img/background.jpg);
+  background-position: center top;
+  background-repeat: no-repeat;
+  font-family: 'Roboto', sans-serif;
+  padding: 0px;
+}
+
+.btn {
+  padding: 5px;
+}
+
+.top-nav {
+  margin-bottom: 30px;
+  margin-top: 20px;
+  background-color: white;
+  padding: 15px;
+  font-size: 25px;
+  border-radius: 20px;
+  background-color: #996633;
+}
+
+.top-nav a {
+  text-decoration: none;
+  color: #000;
+}
+
+.top-nav_login {
+  font-size: 14px;
+  padding: 0px;
+  display: flex;
+}
+
+.top-nav_login_group {
+  margin-right: 20px;
+}
+
+.top-nav_login_btn {
+  padding-top: 30px;
+}
+
+.top-error {
+  color: #660000;
+  padding: 0px;
+  margin: 0px;
+}
+
+.top-error p {
+  font-size: 14px;
+  padding: 0px;
+  margin: 0px;
+}
+
+.content-error p {
+  font-size: 14px;
+  padding: 0px;
+  margin: 0px;
+}
+
+.content {
+  background-color: #CC9966;
+  border-radius: 20px;
+  padding: 15px;
+}
+
+.content_registration_btn {
+  margin-top: 15px;
+}
+
+.content_registration_group {
+  margin-bottom: 10px;
+}
+
+.content_registration_group input {
+  margin: 0px 0px;
+}
+
+.content_registration_error {
+  color: #660000;
+  margin: 0px;
+}
+
+.content_registration_error p {
+  font-size: 14px;
+  padding: 0px;
+  margin: 0px;
+}
