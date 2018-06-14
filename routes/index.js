@@ -13,7 +13,6 @@ router.get('/', function(req,res){
 });
 
 router.post('/login', function(req, res) {
-  console.log(req.body);
   passport.authenticate('local', function(err, user, info) {
     if (err) { return next(err); }
     if (!user) { return res.render('index', {LoginError: 'Неверное имя пользователя или пароль', RegisterError: ''});}//res.render('authPage', {loginError: 'Неверное имя пользователя или пароль', regError: ''}); }
@@ -28,9 +27,15 @@ router.post('/registration', function(req, res) {
   if (req.body.password == req.body.password1){
     User.register(new User({ username : req.body.username, email: req.body.email }), req.body.password, function(err, user) {
       if (err) {
-        return res.render('index', {LoginError: '', RegisterError: err});//res.render('authPage', {loginError: '', regError: err});
+        if ('MongoError' == err.name){
+          return res.render('index', {LoginError: '', RegisterError: 'Email уже используется'});
+        }else if ('UserExistsError' == err.name){
+          return res.render('index', {LoginError: '', RegisterError: 'Имя занято'});
+        }else if ('MissingUsernameError' == err.name){
+          return res.render('index', {LoginError: '', RegisterError: 'Заполните все поля'});
+        }
+        //res.render('authPage', {loginError: '', regError: err});
       }
-      console.log('Зареган');
       passport.authenticate('local', function(err, user, info) {
         if (err) { return next(err); }
         if (!user) { return res.render('index', {LoginError: 'Неверное имя пользователя или пароль', RegisterError: ''});}//res.render('authPage', {loginError: 'Неверное имя пользователя или пароль', regError: ''}); }
