@@ -47,7 +47,7 @@ router.post('/registration', function(req, res) {
 });
 
 router.get('/profile', function(req, res) {
-  res.send("Вы вошли");
+  res.render('profile');
 });
 
 router.get('/logout', function(req, res) {
