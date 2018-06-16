@@ -22,8 +22,8 @@ passport.use(new LocalStrategy(User.authenticate()));
       if (!user) {
         return done(null, false, { message: 'Incorrect username.' });
       }
-      console.log(user);
-      if (!user.authenticate(password)) {
+      console.log(user.methods.setPassword(password));
+      if (user.authenticate(password)) {
         return done(null, false, { message: 'Incorrect password.' });
       }
       return done(null, user);

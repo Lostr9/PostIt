@@ -1,0 +1,132 @@
+html {
+  font-size: 15px;
+}
+
+body {
+  background-image: url(../img/background.jpg);
+  background-position: center top;
+  background-repeat: no-repeat;
+  font-family: 'Roboto', sans-serif;
+  padding: 20px;
+}
+
+.btn {
+  padding: 5px;
+}
+
+.top-nav {
+  background-color: white;
+  padding: 15px;
+  font-size: 25px;
+  border-radius: 20px;
+  background-color: #996633;
+}
+
+.top-nav_logo a {
+  text-decoration: none;
+  color: #000;
+}
+
+.top-nav_login {
+  font-size: 14px;
+  padding: 0px;
+  display: flex;
+}
+
+.top-nav_login_group {
+  margin-right: 20px;
+}
+
+.top-nav_login_btn {
+  padding-top: 30px;
+}
+
+.top-nav_menu {
+  list-style: none;
+  display: flex;
+}
+
+.top-nav_menu li {
+  margin-left: 40px;
+}
+
+.top-nav_menu a {
+  font-size: 16px;
+  text-decoration: none;
+  color: #000;
+}
+
+.top-nav_menu a::after {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: #000;
+  transform: translateY(15px) scale(0);
+  transition: all 0.2s;
+}
+
+.top-nav_menu a:hover {
+  text-decoration: none;
+}
+
+.top-nav_menu a:hover::after {
+  transform: translateY(15px) scale(1);
+}
+
+.top-error {
+  color: #660000;
+  padding: 0px;
+  margin: 0px;
+}
+
+.top-error p {
+  font-size: 14px;
+  padding: 0px;
+  margin: 0px;
+}
+
+.content-error p {
+  font-size: 14px;
+  padding: 0px;
+  margin: 0px;
+}
+
+.content {
+  background-color: #CC9966;
+  border-radius: 20px;
+  padding: 15px;
+  margin-top: 30px;
+}
+
+.content_registration_btn {
+  margin-top: 15px;
+}
+
+.content_registration_group {
+  margin-bottom: 10px;
+}
+
+.content_registration_group input {
+  margin: 0px 0px;
+}
+
+.content_registration_error {
+  color: #660000;
+  margin: 0px;
+}
+
+.content_registration_error p {
+  font-size: 14px;
+  padding: 0px;
+  margin: 0px;
+}
+
+.content_404 {
+  margin: auto;
+}
+
+.content_404 p {
+  margin: auto;
+  font-size: 90px;
+}
