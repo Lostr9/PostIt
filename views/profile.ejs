@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <!-- Required meta tags -->
@@ -31,7 +31,10 @@
           <!-- /.col-md -->
           <div class="col-md-auto">
             <div class="top-nav_menu">
-
+              <li><a href="/">Новый пост</a></li>
+              <li><a href="#">Аккаунты</a></li>
+              <li><a href="/history">История</a>
+              <li><a href="/logout">Выйти</a></li>
             </div>
             <!-- /.top-nav -->
           </div>
@@ -42,13 +45,17 @@
       <!-- /.top-nav -->
       <div class="content">
         <div class="row">
-          <div class="col-auto align-self-center">
-            <div class="content_404">
-              <p>404 страница не найдена</p>
-            </div>
-            <!-- /.404 -->
+          <div class="col-md">
+            <h1><%= Username %></h1>
+            <p>Email: <%= Email %></p>
+            <p>Постов: <%= Post %></p>
+            <p>Подключеных сетей: <%= SocialNetworks %></p>
           </div>
-          <!-- /.col -->
+          <!-- /.col-md -->
+          <div class="col-md">
+
+          </div>
+          <!-- /.col-md -->
         </div>
         <!-- /.row -->
       </div>
