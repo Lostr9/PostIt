@@ -5,7 +5,7 @@ html {
 body {
   background-image: url(../img/background.jpg);
   background-position: center top;
-  background-repeat: no-repeat;
+  background-repeat: repeat-y;
   font-family: 'Roboto', sans-serif;
   padding: 20px;
 }
@@ -62,11 +62,7 @@ body {
   width: 100%;
   height: 2px;
   background-color: #000;
-<<<<<<< HEAD
   transform: translateY(15px) scale(0);
-=======
-  transform: translateY(20px) scale(0);
->>>>>>> 357c3619e3f956719bf82bb0e3fc9c305542535c
   transition: all 0.2s;
 }
 
@@ -75,11 +71,7 @@ body {
 }
 
 .top-nav_menu a:hover::after {
-<<<<<<< HEAD
   transform: translateY(15px) scale(1);
-=======
-  transform: translateY(20px) scale(1);
->>>>>>> 357c3619e3f956719bf82bb0e3fc9c305542535c
 }
 
 .top-error {
@@ -129,7 +121,6 @@ body {
   padding: 0px;
   margin: 0px;
 }
-<<<<<<< HEAD
 
 .content_404 {
   margin: auto;
@@ -139,5 +130,10 @@ body {
   margin: auto;
   font-size: 90px;
 }
-=======
->>>>>>> 357c3619e3f956719bf82bb0e3fc9c305542535c
+
+.content_history {
+  border: solid 2px;
+  border-radius: 20px;
+  margin: 10px;
+  padding: 5px;
+}
