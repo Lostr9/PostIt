@@ -31,10 +31,10 @@
           <!-- /.col-md -->
           <div class="col-md-auto">
             <div class="top-nav_menu">
-              <li><a href="/post">Новый пост</a></li>
-              <li><a href="/networks">Аккаунты</a></li>
-              <li><a href="/history">История</a></li>
-              <li><a href="/logout">Выйти</a></li>
+              <li><a href="/">Новый пост</a></li>
+              <li><a href="#">Аккаунты</a></li>
+              <li><a href="#">О нас</a></li>
+              <li><a href="#">Выйти</a></li>
             </div>
             <!-- /.top-nav -->
           </div>
@@ -53,7 +53,7 @@
           <div class="row justify-content-center">
             <div class="col-md-auto">
               <button type="button"  class="btn">
-                <a target="_blank" href="https://oauth.vk.com/authorize?client_id=6608304&display=page&redirect_uri=https://oauth.vk.com/blank.html&scope=offline,wall&response_type=token&v=5.52">Получить URL</a></button>
+                <a href="https://oauth.vk.com/authorize?client_id=6608304&display=page&redirect_uri=https://oauth.vk.com/blank.html&scope=offline,wall&response_type=token&v=5.52">Получить URL</a></button>
             </div>
             <!-- /.col-md -->
             <div class="col-md-auto">
@@ -63,6 +63,10 @@
           </div>
           <!-- /.row -->
         </form>
+        <div class="content_error">
+          <p><%= error %></p>
+        </div>
+        <!-- /.error -->
       </div>
       <!-- /.content -->
     </div>

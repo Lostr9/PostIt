@@ -155,3 +155,14 @@ body {
 .content_setToken p {
   font-size: 20px;
 }
+
+.content_error {
+  text-align: center;
+  margin-top: 5px;
+}
+
+.content_error p {
+  margin: 0px;
+  font-size: 20px;
+  color: #660000;
+}

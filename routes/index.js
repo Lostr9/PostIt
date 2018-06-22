@@ -93,15 +93,21 @@ router.get('/networks', function(req, res){
 
 router.get('/networks/vk', function(req, res){
   if (!req.user) res.redirect('/');
-  res.render('vk');
+  res.render('vk', {error: ""});
 });
 
 router.post('/networks/vk', function(req, res){
   //console.log(req.body);
-  url =  req.body.url.split('#');
-  url_hash = url[1].split('&')
-  token = url_hash[0].split('=');
-  id = url_hash[2].split('=');
+  try {
+    url =  req.body.url.split('#');
+    url_hash = url[1].split('&')
+    token = url_hash[0].split('=');
+    id = url_hash[2].split('=');
+  }
+  catch (e) {
+    res.render('vk', {error: "Некорректный URL"});
+  }
+
 
   request({
       method: 'POST',
@@ -114,7 +120,6 @@ router.post('/networks/vk', function(req, res){
       for (i = 0; i < user.networks.length; i++){
         if (user.networks[i].title == 'VK'){
           if(user.networks[i].id == id[1]){
-            user.networks.token = token[1];
             isNew = false;
           }
         }
@@ -124,12 +129,13 @@ router.post('/networks/vk', function(req, res){
                                 name: response.body.response[0].first_name,
                                 surname: response.body.response[0].last_name,
                                 title: 'VK',
-                                access_token:token[1],
+                                access_token: token[1],
                                 id: id[1]
                               })
         console.log("Аккаунт добавлен");
       }else{
         console.log("Такой аккаунт уже есть");
+        console.log(user);
       }
       user.save(function (err) {
         if (err) return handleError(err)
@@ -159,7 +165,7 @@ router.post('/post', function(req, res){
           if (error) console.log(error);
           response.body = JSON.parse(response.body);
           console.log(response.body);
-          if(response.body.response.id){
+          if(response.body.response.post_id != undefined){
             console.log('Запись размещена');
           }else {
             console.log('Произошла ошибка');
@@ -170,7 +176,11 @@ router.post('/post', function(req, res){
   });
 });
 
-
+router.get('/test', function(req, res){
+  //res.download('/report-12345.pdf');
+  console.log(req.url);
+  res.send('OK');
+});
 
 
 
