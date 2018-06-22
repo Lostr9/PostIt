@@ -33,7 +33,7 @@
             <form method="post" class="top-nav_login" action="/login">
               <div class="top-nav_login_group">
                 <label for="InputUsername">Имя</label>
-                <input type="text" class="form-control" name="username">
+                <input type="text" class="form-control" name="username" value=<%= username %>>
               </div>
               <!-- /.form-group -->
               <div class="top-nav_login_group">
@@ -78,12 +78,12 @@
             <form method="post" class="content_registration" action="/registration">
               <div class="content_registration_group col">
                 <label for="InputUsername">Email</label>
-                <input type="text" class="form-control" name="email">
+                <input type="text" class="form-control" name="email" value=<%= email %>>
               </div>
               <!-- /.form-group -->
               <div class="content_registration_group col">
                 <label for="InputUsername">Имя</label>
-                <input type="text" class="form-control" name="username">
+                <input type="text" class="form-control" name="username" value=<%= regUsername %>>
               </div>
               <!-- /.form-group -->
               <div class="content_registration_group col">

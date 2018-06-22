@@ -99,6 +99,11 @@ body {
   margin-top: 30px;
 }
 
+.content a {
+  text-decoration: none;
+  color: #000;
+}
+
 .content_registration_btn {
   margin-top: 15px;
 }
@@ -136,4 +141,17 @@ body {
   border-radius: 20px;
   margin: 10px;
   padding: 5px;
+}
+
+.content_description p {
+  margin: 5px;
+}
+
+.content_setToken {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.content_setToken p {
+  font-size: 20px;
 }
