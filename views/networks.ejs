@@ -11,9 +11,12 @@
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&amp;subset=cyrillic" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/fontawesome.css" integrity="sha384-GVa9GOgVQgOk+TNYXu7S/InPTfSDTtBalSgkgqQ7sCik56N9ztlkoTr2f/T44oKV" crossorigin="anonymous">
 
     <!-- Custom styles -->
     <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/font-awesome.css">
+    <link rel="stylesheet" href="css/bootstrap-social.css">
 
 
     <title>Профиль</title>
@@ -45,23 +48,28 @@
       <!-- /.top-nav -->
       <div class="content">
         <div class="row">
+          <div class="col-md">
+            <a href="/networks/vk"  class="btn btn-block btn-social btn-vk" >
+              <span class="fa fa-vk"></span> Подключить ВКонтакте
+            </a>
+          </div>
+          <!-- /.col-md -->
+          <div class="col-md">
+            <a href="/networks/vk"  class="btn btn-block btn-social btn-odnoklassniki">
+              <span class="fa fa-odnoklassniki"></span> Подключить Одноклассники
+            </a>
+          </div>
+          <!-- /.col-md -->
+          <div class="col-md">
+
+          </div>
+          <!-- /.col-md -->
+        </div>
+        <!-- /.row -->
+        <div class="row">
           <div class="col-md"></div>
           <!-- /.col-md -->
-          <div class="col-md-auto">
-            <% if (posts.length != 0) { %>
-              <% for(var i = 0; i < 3; i++) { %>
-                <div class="content_history">
-                  <h1> Username </h1>
-                  <p>Email:  Email </p>
-                  <p>Постов:  Post </p>
-                  <p>Подключеных сетей:  SocialNetworks </p>
-                </div>
-                <!-- /.content_history -->
-              <% } %>
-            <% } else { %>
-              <h1>Тут пока ничего нет</h1>
-            <% } %>
-          </div>
+          <div class="col-md"></div>
           <!-- /.col-md -->
           <div class="col-md"></div>
           <!-- /.col-md -->

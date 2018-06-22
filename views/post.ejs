@@ -44,29 +44,35 @@
       </div>
       <!-- /.top-nav -->
       <div class="content">
-        <div class="row">
-          <div class="col-md"></div>
-          <!-- /.col-md -->
-          <div class="col-md-auto">
-            <% if (posts.length != 0) { %>
-              <% for(var i = 0; i < 3; i++) { %>
-                <div class="content_history">
-                  <h1> Username </h1>
-                  <p>Email:  Email </p>
-                  <p>Постов:  Post </p>
-                  <p>Подключеных сетей:  SocialNetworks </p>
-                </div>
-                <!-- /.content_history -->
-              <% } %>
-            <% } else { %>
-              <h1>Тут пока ничего нет</h1>
-            <% } %>
+        <form action="/post" method="post">
+          <div class="row">
+            <div class="col-md">
+              <textarea autofocus rows="10" cols="70" placeholder="Ваш пост" name="post"></textarea>
+            </div>
+            <!-- /.col-md -->
+            <div class="col-md">
+              <div class="content_description">
+                <p>В текстовом поле напишите пост.</p>
+                <p>Выберете соц. сеть и нажмите кноку "Post it".</p>
+                <p>Далее если в открывшемся окне нужно подтвердить публикацию сделайте это.</p>
+              </div>
+              <!-- /.description -->
+            </div>
+            <!-- /.col-md -->
           </div>
-          <!-- /.col-md -->
-          <div class="col-md"></div>
-          <!-- /.col-md -->
-        </div>
-        <!-- /.row -->
+          <!-- /.row -->
+          <div class="row">
+            <div class="col-md">
+
+            </div>
+            <!-- /.col-md -->
+            <div class="col-md">
+              <button type="submit" class="btn">Post It!</button>
+            </div>
+            <!-- /.col-md -->
+          </div>
+          <!-- /.row -->
+        </form>
       </div>
       <!-- /.content -->
     </div>

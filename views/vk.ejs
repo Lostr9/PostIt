@@ -13,7 +13,7 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&amp;subset=cyrillic" rel="stylesheet">
 
     <!-- Custom styles -->
-    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="../css/main.css">
 
 
     <title>Профиль</title>
@@ -44,29 +44,25 @@
       </div>
       <!-- /.top-nav -->
       <div class="content">
-        <div class="row">
-          <div class="col-md"></div>
-          <!-- /.col-md -->
-          <div class="col-md-auto">
-            <% if (posts.length != 0) { %>
-              <% for(var i = 0; i < 3; i++) { %>
-                <div class="content_history">
-                  <h1> Username </h1>
-                  <p>Email:  Email </p>
-                  <p>Постов:  Post </p>
-                  <p>Подключеных сетей:  SocialNetworks </p>
-                </div>
-                <!-- /.content_history -->
-              <% } %>
-            <% } else { %>
-              <h1>Тут пока ничего нет</h1>
-            <% } %>
+        <form action="/networks/vk" method="post">
+          <div class="content_setToken">
+            <p>Скопируйте URL из адресной строки открывшейся вкладки</p>
+            <input placeholder="https://oauth.vk.com/blank.html#access_token=3622a413692998f796d5cb4e1c46a7398a7263b531e9be7e3f2527d0102fbd85e1dd213e28b0ae55acf72&expires_in=0&user_id=00000001" type="text" class="form-control" name="url">
           </div>
-          <!-- /.col-md -->
-          <div class="col-md"></div>
-          <!-- /.col-md -->
-        </div>
-        <!-- /.row -->
+          <!-- /.content_setToken -->
+          <div class="row justify-content-center">
+            <div class="col-md-auto">
+              <button type="button"  class="btn">
+                <a target="_blank" href="https://oauth.vk.com/authorize?client_id=6608304&display=page&redirect_uri=https://oauth.vk.com/blank.html&scope=offline,wall&response_type=token&v=5.52">Получить URL</a></button>
+            </div>
+            <!-- /.col-md -->
+            <div class="col-md-auto">
+              <button type="submit" class="btn">Отправить URL</button>
+            </div>
+            <!-- /.col-md -->
+          </div>
+          <!-- /.row -->
+        </form>
       </div>
       <!-- /.content -->
     </div>
