@@ -7,10 +7,17 @@
 var app = require('../app');
 var debug = require('debug')('postit:server');
 var http = require('http');
+var https = require('https');
+var fs = require('fs');
 
 /**
  * Get port from environment and store in Express.
  */
+
+var options = {
+key: fs.readFileSync('key.pem'),
+cert: fs.readFileSync('cert.pem')
+};
 
 var port = normalizePort(process.env.PORT || '5000');
 app.set('port', port);
@@ -28,6 +35,10 @@ var server = http.createServer(app);
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
+
+https.createServer(options, app).listen(443, function () {
+console.log('HTTPS listening on 443');
+});
 
 /**
  * Normalize a port into a number, string, or false.
