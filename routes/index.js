@@ -157,7 +157,6 @@ router.post('/post', function(req, res){
   User.findOne({'username': req.user.username}, function (err, user) {//,'networks.name': 'Valera'}, function (err, user) {
     for (i = 0; i < user.networks.length; i++){
       if (user.networks[i].title == 'VK'){
-        console.log('https://api.vk.com/method/wall.post?' + 'owner_ids=' + user.networks[i].id + '&message=' + postUrlEncode + '&signed=1&v=5.80&access_token=' + user.networks[i].access_token);
         request({
             method: 'POST',
             uri: 'https://api.vk.com/method/wall.post?' + 'owner_ids=' + user.networks[i].id + '&message=' + postUrlEncode + '&signed=1&v=5.80&access_token=' + user.networks[i].access_token
@@ -172,6 +171,24 @@ router.post('/post', function(req, res){
           }
         });
       }
+
+      if (user.networks[i].title == 'FB'){
+        console.log('https://graph.facebook.com/v3.0/me/feed?message=' + postUrlEncode + '&access_token=' + user.networks[i].access_token);
+        request({
+            method: 'POST',
+            uri: 'https://graph.facebook.com/v3.0/me/feed?message=' + postUrlEncode + '&access_token=' + user.networks[i].access_token
+        }, function (error, response, body) {
+          if (error) console.log(error);
+          console.log(response.body);
+          response.body = JSON.parse(response.body);
+          console.log(response.body);
+          /*if(response.body.response.id != undefined){
+            console.log('Запись размещена');
+          }else {
+            console.log('Произошла ошибка');
+          }*/
+        });
+      }
     }
   });
 });
@@ -182,7 +199,63 @@ router.get('/test', function(req, res){
   res.send('OK');
 });
 
+router.get('/networks/fb', function(req, res){
+  //console.log(req.url);
+  code = req.url.split('?');
+  code = code[1];
+  code = code.split('#');
+  code = code[0];
+  code = code.split('=');
+  code = code[1];
+  //console.log(code);
 
+  request({
+      method: 'get',
+      uri: 'https://graph.facebook.com/v3.0/oauth/access_token?client_id=1869237853122425&redirect_uri=https://127.0.0.1/networks/fb&client_secret=5f96a2f0444f20e05cae93f6d0a9241a&code=' + code
+  }, function (error, response, body) {
+    if(error) console.log("Произошла ошибка");
+    //console.log(response.url);
+    //console.log(response.body);
+    response.body = JSON.parse(response.body);
+    token = response.body.access_token;
+
+    request({
+        method: 'POST',
+        uri: 'https://graph.facebook.com/v3.0/me?fields=id%2Cfirst_name%2Clast_name&access_token=' + token
+    }, function (error, response, body) {
+      if(error) console.log("Произошла ошибка");
+      response.body = JSON.parse(response.body);
+
+      User.findOne({'username': req.user.username}, function (err, user) {//,'networks.name': 'Valera'}, function (err, user) {
+        isNew = true;
+        for (i = 0; i < user.networks.length; i++){
+          if (user.networks[i].title == 'FB'){
+            if(user.networks[i].id == token){
+              isNew = false;
+            }
+          }
+        }
+        if(isNew){
+          user.networks.push({
+                                  name: response.body.first_name,
+                                  surname: response.body.last_name,
+                                  title: 'FB',
+                                  access_token: token,
+                                  id: response.body.id
+                                })
+          console.log("Аккаунт добавлен");
+        }else{
+          console.log("Такой аккаунт уже есть");
+        }
+        user.save(function (err) {
+          if (err) return handleError(err)
+          console.log('Запись изменена');
+          res.redirect('/post');
+        });
+      });
+    });
+  });
+});
 
 
 
