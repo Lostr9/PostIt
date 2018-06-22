@@ -34,12 +34,44 @@ client_id=1869237853122425&
 client_secret=5f96a2f0444f20e05cae93f6d0a9241a&
 grant_type=fb_exchange_token&
 fb_exchange_token =
-
-https://www.facebook.com/v3.0/dialog/oauth?
+////////////////////////
+/*https://www.facebook.com/v3.0/dialog/oauth?
 client_id=1869237853122425
 &redirect_uri=https://www.facebook.com/connect/login_success.html
-&scope=manage_pages,user_posts
-&state=1234567
+&scope=manage_pages,user_posts,publish_pages
+&state=1234567*/
+/////////////////////////Шаг 1
+https://www.facebook.com/v3.0/dialog/oauth?
+client_id=1869237853122425
+&redirect_uri=https://127.0.0.1/networks/fb
+&scope=manage_pages,user_posts,publish_pages
+////////////////////////Шаг 2
+https://graph.facebook.com/v3.0/oauth/access_token?
+client_id=1869237853122425
+&redirect_uri=https://127.0.0.1/networks/fb
+&client_secret=5f96a2f0444f20e05cae93f6d0a9241a
+&code=
+/////////////////////////////////проверка возможностей
+https://graph.facebook.com/debug_token?
+input_token=EAAakD9o8b3kBANMl0NgJOhNmlYrVEXZBNkuZBCMGDSeBJ27CWZC4nVDNtpoI9vI2uLBjtOWPuP69QAmYxiEruQZCmaZBjZAhZC7X4dvhY1yKap1K5IAJCzEarvPvz17TCQ2JeLoAcIyJZC7ISP7remE68lmMupCw27biIquZA1iZBQQgZDZD
+&access_token=1869237853122425|re0TTTKzWNDMz1NuC5BQfq1sFk8
+
+
+1978438465563874
+1978483465559374
+1977832395624481
+
+
+
+networks/fb?code=AQDgvvzasDTKViWBCyYDIz4c1aRw9idSAfUNXe6C17vbKTWwh8x9709GCQs
+0jNX4cOWb670WFKVYmd219sEV3Uhlq88tvx5lgeqbV4DGGdrYbMgpG4BAKkMNfttXeLKBQIdfGm_4
+tigCGKu-L_fcD6XNjv1mO4s3d30C4GN8tuwDXhYrHsy5uw01uZp48cEbaVMCFuaExodVWmLQB1JR_X
+44VK_QeOH2pfQQwUwQihjaDhCsXyGa8XFD1FRtfuYZhH9N9zyERicMM_IGtBTblZWHDmIKXwjn12znL
+oOf8aKD6YnAbzEeGsQrrcPHan0hN8VEsrNHHI413vYmyHzoJb57#_=_
+
+
+
+
 
 https://www.facebook.com/connect/login_success.html?code=AQDSxGlIAAF0kcOjhRQ7EpCGyL38awb7zuhmzUinDzT7l7htkMt_2x1NcTD23HN05l448LWHXQb3qF4T7tHWnoPN12j4ADCA2k-LVOte5P2kf1ct6G6-RwigvtzcMyeghUeikVSMaU0CKkI_ZrGy1ct0P4zUI9TQQcMDzv7ZL84hXo1XI3VlNfmnB4kadZrSlxw23J_Dvridm_azntXDime3HxvsgTNPOHxwX95snWkn7jOmKSTDhVuISdRKTRz4S9wqXAFC7otOHIWBF-LNNNFauyl0xBzD2c4kbpKgM_CV64Cc3d0Km73cqeXrcaEpOM3X0XqIoNp3AIuYH7c_8Bci&state=1234567#_=_
 
