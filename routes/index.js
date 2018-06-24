@@ -211,7 +211,7 @@ router.get('/networks/fb', function(req, res){
 
   request({
       method: 'get',
-      uri: 'https://graph.facebook.com/v3.0/oauth/access_token?client_id=1869237853122425&redirect_uri=https://127.0.0.1/networks/fb&client_secret=5f96a2f0444f20e05cae93f6d0a9241a&code=' + code
+      uri: 'https://graph.facebook.com/v3.0/oauth/access_token?client_id=1869237853122425&redirect_uri=https://post-it.tmweb.ru/networks/fb&client_secret=5f96a2f0444f20e05cae93f6d0a9241a&code=' + code
   }, function (error, response, body) {
     if(error) console.log("Произошла ошибка");
     //console.log(response.url);
