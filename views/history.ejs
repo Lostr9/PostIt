@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="css/main.css">
 
 
-    <title>Профиль</title>
+    <title>История</title>
   </head>
   <body>
     <div class="container">
@@ -49,12 +49,26 @@
           <!-- /.col-md -->
           <div class="col-md-auto">
             <% if (posts.length != 0) { %>
-              <% for(var i = 0; i < 3; i++) { %>
+              <% for(var i = 0; i < posts.length; i++) { %>
                 <div class="content_history">
-                  <h1> Username </h1>
-                  <p>Email:  Email </p>
-                  <p>Постов:  Post </p>
-                  <p>Подключеных сетей:  SocialNetworks </p>
+                  <p>Текст: <%= posts[i].text %>  </p>
+                  <p>Дата:  <%= posts[i].date %> </p>
+                  <% if (posts[i].VK == true) { %>
+                    <p>ВКонтакте:  ДА </p>
+                  <%} else  { %>
+                    <p>ВКонтакте:  НЕТ </p>
+                  <%}%>
+                  <% if (posts[i].OK == true) {%>
+                    <p>Одноклассники:  ДА </p>
+                  <%} else  { %>
+                    <p>Одноклассники:  НЕТ </p>
+                  <%}%>
+                  <% if (posts[i].FB == true) {%>
+                    <p>Facebook:  ДА </p>
+                  <%} else  { %>
+                    <p>Facebook:  НЕТ </p>
+                  <%}%>
+
                 </div>
                 <!-- /.content_history -->
               <% } %>
@@ -78,8 +92,6 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
-    <script id="__bs_script__">//<![CDATA[
-    document.write("<script async src='http://HOST:3000/browser-sync/browser-sync-client.js?v=2.24.4'><\/script>".replace("HOST", location.hostname));
-//]]></script>
+
   </body>
 </html>

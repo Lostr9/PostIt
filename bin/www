@@ -15,11 +15,11 @@ var fs = require('fs');
  */
 
 var options = {
-key: fs.readFileSync('key.pem'),
-cert: fs.readFileSync('cert.pem')
+  key: fs.readFileSync('key.pem'),
+  cert: fs.readFileSync('cert.pem')
 };
 
-var port = normalizePort(process.env.PORT || '5000');
+var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
 /**
@@ -37,7 +37,7 @@ server.on('error', onError);
 server.on('listening', onListening);
 
 https.createServer(options, app).listen(443, function () {
-console.log('HTTPS listening on 443');
+  console.log('HTTPS listening on 443');
 });
 
 /**
