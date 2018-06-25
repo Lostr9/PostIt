@@ -166,3 +166,30 @@ body {
   font-size: 20px;
   color: #660000;
 }
+
+.content_connect {
+  text-align: center;
+}
+
+.content_connect p {
+  margin: 5px;
+  color: green;
+}
+
+.content_connect button {
+  margin: 0px;
+}
+
+.content_checkbox {
+  margin-left: 15px;
+}
+
+.content_checkbox a {
+  text-decoration: none;
+  cursor: default;
+}
+
+.content_checkbox button {
+  background-color: #587ea3;
+  cursor: default;
+}

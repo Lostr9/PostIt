@@ -122,13 +122,45 @@ st.attachment=eyJtZWRpYSI6IFt7InR5cGUiOiAidGV4dCIsInRleHQiOiAiMSJ9XX0=&
 https://connect.ok.ru/dk?st.cmd=WidgetMediatopicPost&
 st.app=1267916544&
 st.attachment=eyJtZWRpYSI6IFt7InR5cGUiOiAidGV4dCIsInRleHQiOiAiMSJ9XX0=&
-st.signature=e3546b368fd2671fa6af422dfbfc74c3&
+st.return=https://127.0.0.1/profile&
+st.signature=353c9b963d35b5df829dc8c9e239af17&
 st.silent=no&
-st.popup=off&
-st.access_token=-s-4s0RHAD0-t2PFBCWyw5uniDTRy5PqCD1.w3OMBFWR0eqHjC0zS5pGjkRVt7pKECXV-5qoCH.zVbRFAIWRzeNpjI4
+st.popup=off
+
+
+
+
+st.access_token=-s-0.vWwAJ1tvjm0FnStt1vnq-Sovoqy-wRwz3UGwHRxSdN7
 
 
 
 
 access_token	-s-4s0RHAD0-t2PFBCWyw5uniDTRy5PqCD1.w3OMBFWR0eqHjC0zS5pGjkRVt7pKECXV-5qoCH.zVbRFAIWRzeNpjI4
 session_secret_key	140eaecd6fcbe2fc8259f5dd3d74cda6
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+https://connect.ok.ru/oauth/authorize?
+client_id=1267916544
+&scope=LONG_ACCESS_TOKEN,VALUABLE_ACCESS
+&response_type=code
+&redirect_uri=https://127.0.0.1/networks/ok
+
+
+https://api.ok.ru/oauth/token.do?
+code=
+&client_id=1267916544
+&client_secret=515B5D2D805C1BFF510F58B1
+&redirect_uri=https://127.0.0.1/networks/ok
+&grant_type=authorization_code

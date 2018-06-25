@@ -4,6 +4,7 @@ var passport = require('../auth');
 var mongoose = require('mongoose');
 var urlParser = require('url');
 var User = require('../models/user');
+var Post = require('../models/post');
 var request = require('request');
 var md5 = require('md5');
 var base64 = require('base-64');
@@ -20,7 +21,7 @@ router.get('/', function(req,res){
 router.post('/login', function(req, res) {
   passport.authenticate('local', function(err, user, info) {
     if (err) { return next(err); }
-    if (!user) { return res.render('index', {LoginError: 'Неверное имя пользователя или пароль', RegisterError: '', username: req.body.username, email: '', regUsername: ''});}//res.render('authPage', {loginError: 'Неверное имя пользователя или пароль', regError: ''}); }
+    if (!user) { return res.render('index', {LoginError: 'Неверное имя пользователя или пароль', RegisterError: '', username: req.body.username, email: '', regUsername: ''});}
     req.logIn(user, function(err) {
       if (err) { return next(err); }
       return res.redirect('/');
@@ -48,7 +49,7 @@ router.post('/registration', function(req, res) {
       }
       passport.authenticate('local', function(err, user, info) {
         if (err) { return next(err); }
-        if (!user) { return res.render('index', {LoginError: 'Неверное имя пользователя или пароль', RegisterError: '', username: req.body.username, email: '', regUsername: ''});}//res.render('authPage', {loginError: 'Неверное имя пользователя или пароль', regError: ''}); }
+        if (!user) { return res.render('index', {LoginError: '', RegisterError: 'Ошибка регистрации', username: '', email: req.body.email, regUsername: req.body.username});}
         req.logIn(user, function(err) {
           if (err) { return next(err); }
           return res.redirect('/');
@@ -80,7 +81,18 @@ router.get('/logout', function(req, res) {
 
 router.get('/history', function(req, res) {
   if(req.user){
-    res.render('history', {posts: ''});
+    Post.find({'author': req.user._id}, function (err, posts) {
+      data = [];
+      for(var i = 0; i < posts.length; i++){
+        data[i] = {}
+        data[i].text = posts[i].text;
+        data[i].date = posts[i].postDate.getDate() + ".0" + posts[i].postDate.getMonth() + "." + posts[i].postDate.getFullYear() + "  " + posts[i].postDate.getHours() + ":" + posts[i].postDate.getMinutes();
+        data[i].VK = posts[i].VK;
+        data[i].OK = posts[i].OK;
+        data[i].FB = posts[i].FB;
+      }
+      res.render('history', {posts: data});
+    });
   }else{
     res.redirect('/');
   }
@@ -88,7 +100,30 @@ router.get('/history', function(req, res) {
 
 router.get('/networks', function(req, res){
   if (!req.user) res.redirect('/');
-  res.render('networks');
+  Facebook = false;
+  Vkontakte = false;
+  Odnokclass = false;
+  for (i = 0; i < req.user.networks.length; i++){
+    if (req.user.networks[i].title == 'VK') Vkontakte = true;
+    if (req.user.networks[i].title == 'FB') Facebook = true;
+    if (req.user.networks[i].title == 'OK') Odnokclass = true;
+  }
+  res.render('networks', {vk: Vkontakte, ok: Odnokclass, fb: Facebook});
+});
+
+router.post('/networks/del', function(req, res){
+  User.findOne({'username': req.user.username}, function (err, user) {
+    isNew = true;
+    for (i = 0; i < user.networks.length; i++){
+      if (user.networks[i].title == req.body.net){
+        user.networks[i].remove();
+      }
+    }
+    user.save(function (err) {
+      if (err) return handleError(err)
+      res.redirect('/networks');
+    });
+  });
 });
 
 router.get('/networks/vk', function(req, res){
@@ -97,7 +132,6 @@ router.get('/networks/vk', function(req, res){
 });
 
 router.post('/networks/vk', function(req, res){
-  //console.log(req.body);
   try {
     url =  req.body.url.split('#');
     url_hash = url[1].split('&')
@@ -115,7 +149,7 @@ router.post('/networks/vk', function(req, res){
   }, function (error, response, body) {
     if(error) console.log("Произошла ошибка");
     response.body = JSON.parse(response.body);
-    User.findOne({'username': req.user.username}, function (err, user) {//,'networks.name': 'Valera'}, function (err, user) {
+    User.findOne({'username': req.user.username}, function (err, user) {
       isNew = true;
       for (i = 0; i < user.networks.length; i++){
         if (user.networks[i].title == 'VK'){
@@ -131,16 +165,11 @@ router.post('/networks/vk', function(req, res){
                                 title: 'VK',
                                 access_token: token[1],
                                 id: id[1]
-                              })
-        console.log("Аккаунт добавлен");
-      }else{
-        console.log("Такой аккаунт уже есть");
-        console.log(user);
+                              });
       }
       user.save(function (err) {
         if (err) return handleError(err)
-        console.log('Запись изменена');
-        res.redirect('/post');
+        res.redirect('/networks');
       });
     });
   });
@@ -151,71 +180,94 @@ router.get('/post', function(req, res){
   res.render('post');
 });
 
-router.post('/post', function(req, res){
-  //req.body.post
-  postUrlEncode = encodeURI(req.body.post);
-  User.findOne({'username': req.user.username}, function (err, user) {//,'networks.name': 'Valera'}, function (err, user) {
-    for (i = 0; i < user.networks.length; i++){
-      if (user.networks[i].title == 'VK'){
-        request({
-            method: 'POST',
-            uri: 'https://api.vk.com/method/wall.post?' + 'owner_ids=' + user.networks[i].id + '&message=' + postUrlEncode + '&signed=1&v=5.80&access_token=' + user.networks[i].access_token
-        }, function (error, response, body) {
-          if (error) console.log(error);
-          response.body = JSON.parse(response.body);
-          console.log(response.body);
-          if(response.body.response.post_id != undefined){
-            console.log('Запись размещена');
-          }else {
-            console.log('Произошла ошибка');
-          }
-        });
-      }
+router.post('/post', function(req, res, next){
+  if(req.body.post){
+    User.update({username: req.user.username},
+    {
+      posts: req.user.posts + 1
+    }, function (err){ console.log(err); });
 
-      if (user.networks[i].title == 'FB'){
-        console.log('https://graph.facebook.com/v3.0/me/feed?message=' + postUrlEncode + '&access_token=' + user.networks[i].access_token);
-        request({
-            method: 'POST',
-            uri: 'https://graph.facebook.com/v3.0/me/feed?message=' + postUrlEncode + '&access_token=' + user.networks[i].access_token
-        }, function (error, response, body) {
-          if (error) console.log(error);
-          console.log(response.body);
-          response.body = JSON.parse(response.body);
-          console.log(response.body);
-          /*if(response.body.response.id != undefined){
-            console.log('Запись размещена');
-          }else {
-            console.log('Произошла ошибка');
-          }*/
-        });
+    Post.create({ //создание новой записи в коллекции Posts
+        author: req.user._id,
+        text: req.body.post,
+        VK: req.body.vk,
+        FB: req.body.fb,
+        OK: req.body.ok
+    }, function(err, post){ console.log(err); });
+
+    postUrlEncode = encodeURI(req.body.post);
+
+    if(req.body.vk){
+        for (i = 0; i < req.user.networks.length; i++){
+          if (req.user.networks[i].title == 'VK'){
+            request({
+                method: 'POST',
+                uri: 'https://api.vk.com/method/wall.post?' + 'owner_ids=' + req.user.networks[i].id + '&message=' + postUrlEncode + '&signed=1&v=5.80&access_token=' + req.user.networks[i].access_token
+            }, function (error, response, body) {
+              if (error) console.log(error);
+              response.body = JSON.parse(response.body);
+              if(response.body.response.post_id != undefined){
+                console.log('Запись размещена');
+              }else {
+                console.log('Произошла ошибка');
+              }
+            });
+          }
+        }
+      }
+      next();
+  }
+  res.render('post');
+  }, function(req, res, next) {
+    if (req.body.fb){
+      for (i = 0; i < req.user.networks.length; i++){
+        if (req.user.networks[i].title == 'FB'){
+          request({
+              method: 'POST',
+              uri: 'https://graph.facebook.com/v3.0/me/feed?message=' + postUrlEncode + '&access_token=' + req.user.networks[i].access_token
+          }, function (error, response, body) {
+            if (error) console.log(error);
+            response.body = JSON.parse(response.body);
+            try {
+              if(response.body.id != undefined)
+                console.log('Запись размещена');
+            } catch (e) {
+              console.log('Произошла ошибка');
+            }
+          });
+        }
       }
     }
-  });
-});
+    next();
+  }, function(req, res) {
+    if (req.body.ok){
+      for (i = 0; i < req.user.networks.length; i++){
+        if (req.user.networks[i].title == 'OK'){
 
-router.get('/test', function(req, res){
-  //res.download('/report-12345.pdf');
-  console.log(req.url);
-  res.send('OK');
-});
+          postOk = '{"media": [{"type": "text", "text": "' + req.body.post + '"}]}';
+          bytes = utf8.encode(postOk);
+          postOk = base64.encode(bytes);
+          sig = md5("st.attachment=" + postOk + "st.return=" + 'https://127.0.0.1/profile' + '515B5D2D805C1BFF510F58B1');
+          res.redirect('https://connect.ok.ru/dk?st.cmd=WidgetMediatopicPost&st.app=1267916544&st.attachment=' + postOk + '&st.return=https://127.0.0.1/profile&st.signature=' + sig + '&st.silent=no&st.popup=off');
+        }
+      }
+    }
+    res.redirect('/profile');
+  });
 
 router.get('/networks/fb', function(req, res){
-  //console.log(req.url);
   code = req.url.split('?');
   code = code[1];
   code = code.split('#');
   code = code[0];
   code = code.split('=');
   code = code[1];
-  //console.log(code);
 
   request({
       method: 'get',
       uri: 'https://graph.facebook.com/v3.0/oauth/access_token?client_id=1869237853122425&redirect_uri=https://post-it.tmweb.ru/networks/fb&client_secret=5f96a2f0444f20e05cae93f6d0a9241a&code=' + code
   }, function (error, response, body) {
     if(error) console.log("Произошла ошибка");
-    //console.log(response.url);
-    //console.log(response.body);
     response.body = JSON.parse(response.body);
     token = response.body.access_token;
 
@@ -226,11 +278,11 @@ router.get('/networks/fb', function(req, res){
       if(error) console.log("Произошла ошибка");
       response.body = JSON.parse(response.body);
 
-      User.findOne({'username': req.user.username}, function (err, user) {//,'networks.name': 'Valera'}, function (err, user) {
+      User.findOne({'username': req.user.username}, function (err, user) {
         isNew = true;
         for (i = 0; i < user.networks.length; i++){
           if (user.networks[i].title == 'FB'){
-            if(user.networks[i].id == token){
+            if(user.networks[i].id == response.body.id){
               isNew = false;
             }
           }
@@ -243,66 +295,65 @@ router.get('/networks/fb', function(req, res){
                                   access_token: token,
                                   id: response.body.id
                                 })
-          console.log("Аккаунт добавлен");
         }else{
-          console.log("Такой аккаунт уже есть");
         }
         user.save(function (err) {
           if (err) return handleError(err)
-          console.log('Запись изменена');
-          res.redirect('/post');
+          res.redirect('/networks');
         });
       });
     });
   });
 });
 
+router.get('/networks/ok', function(req, res){
 
-
-
-/*router.get('/networks', function(req, res) {
-  //myurls = new url.URL ('https://oauth.vk.com/blank.html#access_token=19d113a81c0f853835288c8ec054a250c5c01e86d32559456bd49f75bbd62f61b975c54b73640931be7ee&expires_in=0&user_id=61486425&state=123456');
-  //console.log(myurls.searchParams.get('access_token'));
-  //  url = urlParser.parse('https://oauth.vk.com/blank.html#access_token=19d113a81c0f853835288c8ec054a250c5c01e86d32559456bd49f75bbd62f61b975c54b73640931be7ee&expires_in=0&user_id=61486425&state=123456');
-
-  //console.log(url.searchParams('access_token'));
-  //tmp = url.hash.split('&');
-  //console.log(tmp);
-  //token = tmp[0].split("=");
-  //id_user = tmp[2].split("=");
-  //console.log("Начало url");
-  //console.log(req.url);
-  //console.log("конец url");
   code = req.url.split('=');
-  console.log(code[1]);
+  code = code[1];
+
   request({
-      method: 'POST',
-      uri: 'https://api.ok.ru/oauth/token.do?client_id=1267916544&client_secret=515B5D2D805C1BFF510F58B1&redirect_uri=http://127.0.0.1:5000/networks&grant_type=authorization_code&code=' + code[1]
+      method: 'post',
+      uri: 'https://api.ok.ru/oauth/token.do?code=' + code + '&client_id=1267916544&client_secret=515B5D2D805C1BFF510F58B1&redirect_uri=https://127.0.0.1/networks/ok&grant_type=authorization_code'
   }, function (error, response, body) {
-    console.log(response.url);
-    console.log(response.body);
-    console.log(body);
+    if(error) console.log("Произошла ошибка");
+    response.body = JSON.parse(response.body);
+    token = response.body.access_token;
+
+    secret_key  = md5('515B5D2D805C1BFF510F58B1' + token);
+    sig = md5('application_key=CBAQNDJMEBABABABAfields=first_name, last_name, url_profileformat=jsonmethod=users.getCurrentUser' + secret_key);
+
+    request({
+        method: 'get',
+        uri: 'https://api.ok.ru/fb.do?application_key=CBAQNDJMEBABABABA&fields=first_name%2C%20last_name%2C%20url_profile&format=json&method=users.getCurrentUser&sig=' + sig + '&access_token=' + token
+    }, function (error, response, body) {
+      if(error) console.log("Произошла ошибка");
+      response.body = JSON.parse(response.body);
+      User.findOne({'username': req.user.username}, function (err, user) {
+        isNew = true;
+        for (i = 0; i < user.networks.length; i++){
+          if (user.networks[i].title == 'OK'){
+            if(user.networks[i].id == response.body.uid){
+              isNew = false;
+            }
+          }
+        }
+        if(isNew){
+          user.networks.push({
+                                  name: response.body.first_name,
+                                  surname: response.body.last_name,
+                                  title: 'OK',
+                                  access_token: token,
+                                  id: response.body.uid
+                                })
+        }else{
+        }
+        user.save(function (err) {
+          if (err) return handleError(err)
+          res.redirect('/networks');
+        });
+      });
+    });
   });
-  //res.redirect('https://api.ok.ru/oauth/token.do?client_id=1267916544&client_secret=515B5D2D805C1BFF510F58B1&redirect_uri=http://127.0.0.1:5000/networks/ok&grant_type=authorization_code&code=' + code[1]);
-  //res.send(id_user);
-  console.log(req.url);
-  console.log(req.body);
-  res.send('OK');
 });
 
-router.post('/networks', function(req, res) {
-  console.log(req);
-});
-
-router.get('/networks/ok', function(req, res) {
-  //myurls = new url.URL ('https://oauth.vk.com/blank.html#access_token=19d113a81c0f853835288c8ec054a250c5c01e86d32559456bd49f75bbd62f61b975c54b73640931be7ee&expires_in=0&user_id=61486425&state=123456');
-  //console.log(myurls.searchParams.get('access_token'));
-  var text = '{"media": [{"type": "text","text": "1"}]}';
-  var bytes = utf8.encode(text);
-  var encoded = base64.encode(bytes);
-  //console.log(encoded);
-  console.log(md5("st.attachment=eyJtZWRpYSI6IFt7InR5cGUiOiAidGV4dCIsInRleHQiOiAiMSJ9XX0=140eaecd6fcbe2fc8259f5dd3d74cda6"));
-  res.send('OK');
-});
-*/
 module.exports = router;

@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="css/bootstrap-social.css">
 
 
-    <title>Профиль</title>
+    <title>Аккаунты</title>
   </head>
   <body>
     <div class="container">
@@ -55,7 +55,7 @@
           </div>
           <!-- /.col-md -->
           <div class="col-md">
-            <a href="/networks/ok"  class="btn btn-block btn-social btn-odnoklassniki">
+            <a href="https://connect.ok.ru/oauth/authorize?client_id=1267916544&scope=LONG_ACCESS_TOKEN,VALUABLE_ACCESS&response_type=code&redirect_uri=https://127.0.0.1/networks/ok" class="btn btn-block btn-social btn-odnoklassniki">
               <span class="fa fa-odnoklassniki"></span> Подключить Одноклассники
             </a>
           </div>
@@ -69,11 +69,41 @@
         </div>
         <!-- /.row -->
         <div class="row">
-          <div class="col-md"></div>
+          <div class="col-md">
+            <% if (vk == true) { %>
+              <div class="content_connect">
+                <form action="/networks/del" method="post">
+                  <p>Подключено</p>
+                  <button type="submit" class="btn" name="net" value="VK">Отключить</button>
+                </form>
+              </div>
+              <!-- /.content_connect -->
+            <% } %>
+          </div>
           <!-- /.col-md -->
-          <div class="col-md"></div>
+          <div class="col-md">
+            <% if (ok == true) { %>
+              <div class="content_connect">
+                <form action="/networks/del" method="post">
+                  <p>Подключено</p>
+                  <button type="submit" class="btn" name="net" value="OK">Отключить</button>
+                </form>
+              </div>
+              <!-- /.content_connect -->
+            <% } %>
+          </div>
           <!-- /.col-md -->
-          <div class="col-md"></div>
+          <div class="col-md">
+            <% if (fb == true) { %>
+              <div class="content_connect">
+                <form action="/networks/del" method="post">
+                  <p>Подключено</p>
+                  <button type="submit" class="btn" name="net" value="FB">Отключить</button>
+                </form>
+              </div>
+              <!-- /.content_connect -->
+            <% } %>
+          </div>
           <!-- /.col-md -->
         </div>
         <!-- /.row -->
@@ -88,8 +118,5 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
-    <script id="__bs_script__">//<![CDATA[
-    document.write("<script async src='http://HOST:3000/browser-sync/browser-sync-client.js?v=2.24.4'><\/script>".replace("HOST", location.hostname));
-//]]></script>
   </body>
 </html>
