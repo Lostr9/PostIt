@@ -247,8 +247,8 @@ router.post('/post', function(req, res, next){
           postOk = '{"media": [{"type": "text", "text": "' + req.body.post + '"}]}';
           bytes = utf8.encode(postOk);
           postOk = base64.encode(bytes);
-          sig = md5("st.attachment=" + postOk + "st.return=" + 'https://127.0.0.1/profile' + '515B5D2D805C1BFF510F58B1');
-          res.redirect('https://connect.ok.ru/dk?st.cmd=WidgetMediatopicPost&st.app=1267916544&st.attachment=' + postOk + '&st.return=https://127.0.0.1/profile&st.signature=' + sig + '&st.silent=no&st.popup=off');
+          sig = md5("st.attachment=" + postOk + "st.return=" + 'https://www.post-it.tmweb.ru/profile' + '515B5D2D805C1BFF510F58B1');
+          res.redirect('https://connect.ok.ru/dk?st.cmd=WidgetMediatopicPost&st.app=1267916544&st.attachment=' + postOk + '&st.return=https://www.post-it.tmweb.ru/profile&st.signature=' + sig + '&st.silent=no&st.popup=off');
         }
       }
     }
@@ -265,7 +265,7 @@ router.get('/networks/fb', function(req, res){
 
   request({
       method: 'get',
-      uri: 'https://graph.facebook.com/v3.0/oauth/access_token?client_id=1869237853122425&redirect_uri=https://post-it.tmweb.ru/networks/fb&client_secret=5f96a2f0444f20e05cae93f6d0a9241a&code=' + code
+      uri: 'https://graph.facebook.com/v3.0/oauth/access_token?client_id=1869237853122425&redirect_uri=https://www.post-it.tmweb.ru/networks/fb&client_secret=5f96a2f0444f20e05cae93f6d0a9241a&code=' + code
   }, function (error, response, body) {
     if(error) console.log("Произошла ошибка");
     response.body = JSON.parse(response.body);
@@ -313,7 +313,7 @@ router.get('/networks/ok', function(req, res){
 
   request({
       method: 'post',
-      uri: 'https://api.ok.ru/oauth/token.do?code=' + code + '&client_id=1267916544&client_secret=515B5D2D805C1BFF510F58B1&redirect_uri=https://127.0.0.1/networks/ok&grant_type=authorization_code'
+      uri: 'https://api.ok.ru/oauth/token.do?code=' + code + '&client_id=1267916544&client_secret=515B5D2D805C1BFF510F58B1&redirect_uri=https://www.post-it.tmweb.ru/networks/ok&grant_type=authorization_code'
   }, function (error, response, body) {
     if(error) console.log("Произошла ошибка");
     response.body = JSON.parse(response.body);
